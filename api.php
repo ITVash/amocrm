@@ -99,23 +99,12 @@
       }
     }
 
-    /**
-     * Функция перебора массива
-     */
-    protected function forEach ($request) {
-      while ($reqest !== null) {
-        foreach ($reqest as $req) {
-          # code...
-        }
-      }
-    }
-
     public function __destruct() {
       curl_close($this->_curl);
     }
     abstract protected function add();
     abstract protected function upp();
-    abstract protected function list();
+    abstract protected function listt();
     abstract protected function del();
   }
 ?>
