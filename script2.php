@@ -18,7 +18,9 @@
   //$phone = trim('380958755772');
 
   $dubl = $cont->dubl(array('phone' => $phone));
+  echo "Дубль <pre> \n";
   var_dump($dubl);
+  echo "</pre> \n";
   if ($dubl == null) {
     $cont->name = $name;
     $cont->phone = $phone;
@@ -37,9 +39,11 @@
   } else {
     //$tel->send('Запрос на повторный звонок от клиента: ' . $dubl['name'], $dubl['id']);
   }
-  echo "Инфо: \n <pre>";
+  echo " \n Инфо: \n <pre>";
   $inform = $cont->getInfo($phone);
+  echo "Телефон: {$phone} \n";
   $inform = $inform[0];
+  var_dump($inform);
 
   $out = $lead->dubl(1936621, array('id'=> $inform [ 'id' ], 'name'=> $inform [ 'name' ]));
 

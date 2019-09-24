@@ -86,14 +86,28 @@
       $out = $this->_build($link);
       $out = $out[ 'items' ];
       while ($out !== null) {
-        foreach ($out as $cont) {
+        /*foreach ($out as $cont) {
 					if (count($cont['custom_fields']) == 0)
 						continue;
 					for ($i=0; $i < count($cont['custom_fields']); $i++) {
-						if ($cont['custom_fields'][$i]['values'][0]['value'] == $email || $cont['custom_fields'][$i]['values'][0]['value'] == $phone) {
-							$result = $cont;
-						}
+
+            echo "кастомных полей: (" . count($cont['custom_fields']). ") \n" . $cont['custom_fields'][$i]['name'] . " \n ";
+            if ($cont['custom_fields'][$i]['values'][0]['value'] === $email || $cont['custom_fields'][$i]['values'][0]['value'] === $phone)
+              $result = $cont;
 					}
+        }*/
+        foreach ($out as $cust) {
+          if (count($cust['custom_fields']) == 0)
+            continue;
+          foreach ($cust['custom_fields'] as $val) {
+            if (!isset($val["code"]) || !isset($val["code"]))
+              continue;
+            echo "<pre> \n";
+            var_dump($val);
+            echo "\n </pre> \n";
+            if ($val['values'][0]['value'] == $email || $val['values'][0]['value'] == $phone) 
+              $result = $cust;
+          }
         }
         if (count($out) >= 500) {
           $offset += 500;
@@ -101,11 +115,13 @@
             'limit_rows' => '500',
             'limit_offset' => $offset
           );
-          $link = "https://{$this->_subdomain}.amocrm.ru/api/v2/contacts?" . http_build_query($sort) . "&{$this->_uh}";
+          $link = "https://{$this->_subdomain}.amocrm.ru/api/v2/contacts/?" . http_build_query($sort) . "&{$this->_uh}";
           $out = $this->_build($link);
           $out = $out[ 'items' ];
         } else $out = null;
       }
+      echo "Значение Массива: \n";
+      var_dump($result);
       return $result;
     }
     public function add() {
